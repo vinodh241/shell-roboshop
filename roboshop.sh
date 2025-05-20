@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AMI_ID="ami-09c813fb71547fc4f"  # Amazom machine ID
-SG_UD="sg-052fc2c712d4ff706" # Security group ID
+SG_UD="sg-052fc2c712d4ff7066" # Security group ID
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "frontend")
 ZONE_ID="Z07082243VUB84KU714AG"
 DOMAIN_NAME="vinodh.site"
