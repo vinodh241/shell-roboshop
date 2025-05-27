@@ -58,6 +58,9 @@ VALIDATE $? "Creating a dir"
 curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart"
 
+
+rm -rf /app/*
+cd /app
 unzip /tmp/cart.zip
 VALIDATE $? "unzipping cart services"
 
