@@ -32,14 +32,14 @@ VALIDATE(){
         exit 1
     fi
 }
-
-dnf module disable nodejs -y
+ 
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "disabling default nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "enabling nodejs-20 version"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "installing nodejs"
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
@@ -49,7 +49,7 @@ VALIDATE $? "adding application user"
 mkdir -p  /app
 VALIDATE $? "Creating a dir"
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart"
 
 unzip /tmp/cart.zip
