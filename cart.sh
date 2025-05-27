@@ -1,5 +1,6 @@
 #!/bin/bash
 
+START_TIME=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
@@ -32,15 +33,15 @@ VALIDATE(){
         exit 1
     fi
 }
- 
+
 dnf module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? "disabling default nodejs"
+VALIDATE $? "Disabling default nodejs"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
-VALIDATE $? "enabling nodejs-20 version"
+VALIDATE $? "Enabling nodejs:20"
 
 dnf install nodejs -y &>>$LOG_FILE
-VALIDATE $? "installing nodejs"
+VALIDATE $? "Installing nodejs:20"
 
 id roboshop
 if [ $? -ne 0 ]
@@ -51,18 +52,19 @@ else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
 
+mkdir -p /app 
+VALIDATE $? "Creating app directory"
 
-mkdir -p  /app
-VALIDATE $? "Creating a dir"
-
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart"
 
-
 rm -rf /app/*
-cd /app
-unzip /tmp/cart.zip
-VALIDATE $? "unzipping cart services"
+cd /app 
+unzip /tmp/cart.zip &>>$LOG_FILE
+VALIDATE $? "unzipping cart"
+
+npm install &>>$LOG_FILE
+VALIDATE $? "Installing Dependencies"
 
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service
 VALIDATE $? "Copying cart service"
@@ -72,4 +74,8 @@ systemctl enable cart  &>>$LOG_FILE
 systemctl start cart
 VALIDATE $? "Starting cart"
 
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+
+echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
 
