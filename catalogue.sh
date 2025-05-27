@@ -53,37 +53,37 @@ else
 fi
 
 mkdir -p /app 
-VALIDATE $? "creating app directory"
+VALIDATE $? "Creating app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-VALIDATE $? "downloading the catalogue.zip files"
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
+VALIDATE $? "Downloading Catalogue"
 
-
+rm -rf /app/*
 cd /app 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "unzipping catalogue"
 
-cd /app
-npm install  &>>$LOG_FILE
-VALIDATE $? "installing npm dependencies"
+npm install &>>$LOG_FILE
+VALIDATE $? "Installing Dependencies"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "cpoying catalogue services"
+VALIDATE $? "Copying catalogue service"
 
-systemctl daemon-reload
-systemctl enable catalogue 
+systemctl daemon-reload &>>$LOG_FILE
+systemctl enable catalogue  &>>$LOG_FILE
 systemctl start catalogue
+VALIDATE $? "Starting Catalogue"
 
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo 
+dnf install mongodb-mongosh -y &>>$LOG_FILE
+VALIDATE $? "Installing MongoDB Client"
 
-VALIDATE $? "strating catalogue services"
-
-cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying mongodb repos"
-
-dnf install mongodb-mongosh -y &>>$LOG_FILE 
-VALIDATE $? "installing mongodb client"
-
-mongosh --host mongodb.vinodh.site </app/db/master-data.js
-VALIDATE $?  "Loading data into mangodb"
-
+STATUS=$(mongosh --host mongodb.vinosh.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+if [ $STATUS -lt 0 ]
+then
+    mongosh --host mongodb.vinodh.site </app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "Loading data into MongoDB"
+else
+    echo -e "Data is already loaded ... $Y SKIPPING $N"
+fi
 
