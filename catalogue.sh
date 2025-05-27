@@ -82,7 +82,7 @@ VALIDATE $? "copying mongodb repos"
 dnf install mongodb-mongosh -y &>>$LOG_FILE 
 VALIDATE $? "installing mongodb client"
 
-mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js
+mongosh --host mongodb.vinodh.site </app/db/master-data.js
 VALIDATE $?  "Loading data into mangodb"
 
 
