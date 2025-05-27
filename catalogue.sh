@@ -74,6 +74,7 @@ systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
 
+
 VALIDATE $? "strating catalogue services"
 
 cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongo.repo
