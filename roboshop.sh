@@ -8,6 +8,7 @@ DOMAIN_NAME="vinodh.site" # replace with your domain
 
 #for instance in ${INSTANCES[@]}
 for instance in $@
+
 do
     INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-052fc2c712d4ff706 --tag-specifications "ResourceType=instance,Tags=[{Key=Name, Value=$instance}]" --query "Instances[0].InstanceId" --output text)
     if [ $instance != "frontend" ]
