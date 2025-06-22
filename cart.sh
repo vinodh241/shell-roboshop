@@ -31,14 +31,15 @@ VALIDATE(){
     fi   
 } 
 
-dnf module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? " Disabling default nodejs"
 
-dnf module enable nodejs:20 -y &&>>$LOG_FILE
-VALIDATE $? " Enabling nodejs: 20"
+dnf module disable nodejs -y &>>$LOG_FILE
+VALIDATE $? "Disabling default nodejs" 
+
+dnf module enable nodejs:20 -y &>>$LOG_FILE
+VALIDATE $? "Enabling default nodejs"
 
 dnf install nodejs -y &>>$LOG_FILE
-VALIDATE $? " Installing nodejs " 
+VALIDATE $? "Installing nodejs " 
 
 id roboshop
 if [ $? -ne 0 ]
@@ -49,8 +50,8 @@ else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app
-VALIDATE $? "creating app"
+mkdir -p /app 
+VALIDATE $? "Creating app directory"
 
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading cart"
@@ -76,4 +77,3 @@ TOTAL_TIME=$(( $END_TIME - $START_TIME ))
 
 
 echo -e " Script execution completed successfully $Y total time taken : $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
-
