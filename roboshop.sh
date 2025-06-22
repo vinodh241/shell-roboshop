@@ -6,7 +6,7 @@ INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipp
 ZONE_ID="Z07082243VUB84KU714AG" # replace with your ZONE ID
 DOMAIN_NAME="vinodh.site" # replace with your domain
 
-#for instance in ${INSTANCES[@]}
+#for instance in ${INSTANCES[@]
 for instance in $@
 
 do
