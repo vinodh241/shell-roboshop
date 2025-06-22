@@ -46,7 +46,7 @@ systemctl enable mysqld
 VALIDATE $? "enablling MySql server"
 
 systemctl start mysqld  
-VALIDATE$? "starting MySql Server"
+VALIDATE $? "starting MySql Server"
 
 
 mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD
