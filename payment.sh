@@ -58,7 +58,7 @@ VALIDATE $? "unzipping payment"
 pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? " installing python dependencies"
 
-cp $SCRIPT_DIR/payment.service //etc/systemd/system/payment.service
+cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
 VALIDATE $? "copying the payment services"
 
 systemctl daemon-reload
