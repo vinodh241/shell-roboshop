@@ -55,7 +55,7 @@ unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "unzipping payment"
 
 
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? " installing python dependencies"
 
 cp $SCRIPT_DIR/payment.service //etc/systemd/system/payment.service
