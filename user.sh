@@ -63,5 +63,5 @@ unzip /tmp/user.zip
 VALIDATE $? 
 
 cd /app 
-npm install &>>$Loading
+npm install  -y &>>$Loading
 VALIDATE $? "Installing dependices"
