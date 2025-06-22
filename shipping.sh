@@ -21,6 +21,10 @@ then
 else
    echo -e "$G youre running with root access $N " | tee -a $LOG_FILE
    fi
+
+echo "Please enter the mysql root password"
+read -s MYSQL_ROOT_PASSWORD
+
 VALIDATE(){
     if [ $1 -eq 0 ]
     then 
@@ -76,14 +80,14 @@ VALIDATE $? "starting shipping"
 dnf install mysql -y 
 VALIDATE $? "installing mysql"
 
-mysql -h mysql.vinodh.site -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h mysql.vinodh.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
 VALIDATE $? "Login and Loading content to mysql for roboshop app"
 
 
-mysql -h mysql.vinodh.site -uroot -pRoboShop@1 < /app/db/app-user.sql 
+mysql -h mysql.vinodh.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql 
 VALIDATE $? "Login and Loading content to mysql for roboshop app"
 
-mysql -h mysql.vinodh.site -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h mysql.vinodh.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql
 VALIDATE $? "Login and Loading content to mysql for roboshop app"
 
 systemctl restart shipping
