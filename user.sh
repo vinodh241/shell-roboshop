@@ -63,6 +63,6 @@ cd /app
 unzip /tmp/user.zip
 VALIDATE $? 
 
-cd /app 
+
 npm install  -y &>>$LOG_FILE
 VALIDATE $? "Installing dependices"
