@@ -51,7 +51,7 @@ VALIDATE $? "Starting rabbitmq"
 
 
 id roboshop
-if [ $? -ne 0 ]
+if [ $? -ne 1 ]
 then
     rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWORD &>>$LOG_FILE
     VALIDATE $? "Creating roboshop system user"
