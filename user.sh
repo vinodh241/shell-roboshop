@@ -73,3 +73,6 @@ VALIDATE $? "copying files "
 systemctl daemon-reload
 systemctl enable user 
 systemctl start user
+VALIDATE $? "Starting cart"
+
+echo -e "$G Script execution completed successfully $N time taken: $TOTAL_TIME seconds $N"
