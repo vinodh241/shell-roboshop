@@ -1,5 +1,6 @@
 #!/bin/bash
-echo -e "$G Script name is : $0 $N "
+
+echo -e "Script name is : $G $0 $N "
 
 START_TIME=$(date +%s)  # here declearing start time 
 USERID=$( id -u )
