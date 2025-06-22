@@ -77,7 +77,7 @@ VALIDATE $? "enabling shipping"
 systemctl start shipping
 VALIDATE $? "starting shipping"
 
-dnf install mysql -y 
+dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "installing mysql"
 
 mysql -h mysql.vinodh.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
