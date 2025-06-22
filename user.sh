@@ -33,13 +33,13 @@ VALIDATE (){
     
 }
 
-dnf module disable nodejs -y &>>$LOG_FILE
+dnf module disable nodejs -y 
 VALIDATE $? "Disabling default nodejs"
 
-dnf module enable nodejs:20 -y &??$LOG_FILE
+dnf module enable nodejs:20 -y 
 VALIDATE $? "enabling nodejs:20 version"
 
-dnf install nodejs -y &>>$LOG_FILE
+dnf install nodejs -y 
 VALIDATE $? "install nodejs"
 
 id roboshop
@@ -48,6 +48,6 @@ then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
     VALIDATE $? "Creating roboshop user instead of system user"
 else
-    echo -e  "system user already added $Y .. nothing do $N " 
+    echo -e  "$G system user already added $Y .. nothing do $N " 
 fi
 
