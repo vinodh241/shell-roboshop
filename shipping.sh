@@ -80,6 +80,8 @@ VALIDATE $? "starting shipping"
 dnf install mysql -y  &>>$LOG_FILE
 VALIDATE $? "installing mysql"
 
+
+
 mysql -h mysql.vinodh.site -uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql
 VALIDATE $? "Login and Loading content to mysql for roboshop app"
 
