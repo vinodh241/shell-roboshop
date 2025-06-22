@@ -66,3 +66,10 @@ VALIDATE $?
 
 npm install  -y &>>$LOG_FILE
 VALIDATE $? "Installing dependices"
+
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+VALIDATE $? "copying files "
+
+systemctl daemon-reload
+systemctl enable user 
+systemctl start user
