@@ -70,3 +70,9 @@ systemctl daemon-reload &>>$LOG_FILE
 systemctl enable user &>>$LOG_FILE
 systemctl start user
 VALIDATE $? "Starting user"
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+
+
+echo -e " Script execution completed successfully $Y total time taken : $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
