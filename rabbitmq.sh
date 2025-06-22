@@ -22,8 +22,7 @@ else
    echo -e "$G youre running with root access $N " | tee -a $LOG_FILE
    fi
 
-echo "Please enter the rabbitmq root password"
-read -s RABBITMQ_ROOT_PASSWORD
+
 
 
 VALIDATE(){
@@ -49,15 +48,8 @@ VALIDATE $? "enabling rabbitmq"
 systemctl start rabbitmq-server
 VALIDATE $? "Starting rabbitmq"
 
-
-id roboshop
-if [ $? -ne 0 ]
-then
-    rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWORD &>>$LOG_FILE
-    VALIDATE $? "Creating roboshop system user"
-else
-    echo -e "System user roboshop already created ... $Y SKIPPING $N"
-fi
+rabbitmqctl add_user roboshop roboshop123
+VALIDATE $? "Adding user"
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 VALIDATE $? "setting up the permissions" 
