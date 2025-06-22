@@ -52,3 +52,5 @@ else
     echo -e  "$G system user already added $Y .. nothing do $N " 
 fi
 
+mkdir /app 
+VALIDATE $? "creating a new directroy"
